@@ -15,25 +15,32 @@ export default {
     props: ['is_logged']
 }
 </script>
-<style scoped>
+<style>
+.menu {
+  width: 230px;
+}
 .menu ul{
     background-color: rgb(9, 184, 125);
-    display: flex;
     justify-content:center;
     list-style: none;
     margin: 10px 0;
     padding: 0 0;
+    display: flex;
+    flex-direction: column;
+
     }
 .menu li {
     color: white;
     font-size: 20px;
     font-weight: bold;
-    padding: 10px 0;
+    text-align: left;
     text-transform: uppercase;  
+    font-family: 'Quicksand', sans-serif;
     }
 .menu a {
     color: white;
     padding: 10px;
+    display: block;
     text-decoration: none;
     }
 .menu a:hover {

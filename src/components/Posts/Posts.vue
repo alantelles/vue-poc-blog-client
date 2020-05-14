@@ -1,15 +1,31 @@
 <template>
-    <div>
+    <div class="main-screen ">
         <div v-if="loaded">
             <h2>All posts ({{ got_posts.length }})</h2>
-            <div v-bind:key="post._id" v-for="post in got_posts">
-                <p><router-link 
-                    :to="{name: 'Post', params: {id: post._id}}"
-                    >{{ post.title }}</router-link></p>
+            <div class="panels">
+                <div class="panel">
+                    <div v-bind:key="post._id" v-for="post in got_posts">
+                        <p>
+                            <router-link 
+                            :to="{name: 'Post', params: {id: post._id}}"
+                            >{{ post.title }}</router-link>
+                            <router-link v-if="post.author._id == user_logged" class="reg-button" :to="{name: 'EditPost', params: {id: post._id}}">
+                                <button class="my-btn mini-btn" type="button">Edit this post</button>
+                            </router-link>
+                            <router-link v-if="post.author._id == user_logged" class="reg-button" :to="{name: 'DeletePost', params: {id: post._id}}">
+                                <button class="my-btn mini-btn" type="button">Delete this post</button>
+                            </router-link>
+                        </p>
+                    </div>
+                </div>
             </div>
         </div>
         <div v-else>Loading...</div>
-        <h5><router-link to="/post/new">New post</router-link></h5>
+        <div class="btn-group">
+            <router-link class="reg-button" :to="{name: 'NewPost'}">
+                <button class="my-btn" type="button">Write new post</button>
+            </router-link>            
+        </div>
     </div>
 </template>
 <script>
@@ -19,11 +35,13 @@ export default {
     data: function () {
         return {
             got_posts: [],
-            loaded: false
+            loaded: false,
+            user_logged: ''
         }
     },
     mounted: function () {
         this.getPosts()
+        this.user_logged = sessionStorage.getItem('_id')
     },
     methods: {
         getPosts() {
